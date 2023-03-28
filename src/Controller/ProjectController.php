@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Project;
 use App\Repository\ProjectRepository;
+use PHPUnit\Util\Exception;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,12 +40,13 @@ class ProjectController extends AbstractController
 
 
     #[Route('/project', name: 'project_new', methods: ["POST"])]
-    public function new(Request $request): Response
+    public function new(Request $request, LoggerInterface $logger): Response
     {
+        $content = json_decode($request->getContent());
 
         $project = new Project();
-        $project->setName($request->request->get('name'));
-        $project->setDescription($request->request->get('description'));
+        $project->setName($content->name);
+        $project->setDescription($content->description);
 
         $this->repository->save($project, true);
 

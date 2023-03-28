@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useContext} from 'react';
 
-const Layout =({children}) =>{
-    return(
-        <div className="container">
+const Layout = ({children}) => {
+    return (
+        <div>
             {children}
         </div>
     )
